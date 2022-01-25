@@ -1,0 +1,13 @@
+{
+    "extends": "../tsconfig.json",
+    "include": ["./main.ts"],
+    "compilerOptions": {
+        "baseUrl": "./",
+        "rootDir": "./",
+        "outDir": "../dist",
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "types": ["node"],
+        "skipLibCheck": true
+    }
+}

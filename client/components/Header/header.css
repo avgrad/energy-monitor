@@ -1,0 +1,28 @@
+h1 {
+    font-weight: bold;
+    color: white;
+    margin: 6px 0 12px;
+}
+
+header {
+    border-bottom: 1px solid var(--divider);
+    position: relative;
+}
+
+.connection-status {
+    position: absolute;
+    bottom: 18px;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--divider);
+}
+
+.connection-status[data-connected="true"] {
+    background: #318617;
+}
+
+.connection-status[data-connected="false"] {
+    background: #911f1f;
+}

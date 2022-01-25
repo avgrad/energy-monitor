@@ -1,0 +1,19 @@
+{
+    // base config for both client and server
+    "compilerOptions": {
+        "rootDir": "./",
+        "target": "ESNext",
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "allowJs": false,
+        "sourceMap": true,
+        "skipLibCheck": false,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "useDefineForClassFields": true,
+        "paths": {
+            "~/types/*": ["../types/*"]
+        }
+    }
+}

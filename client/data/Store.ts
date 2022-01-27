@@ -2,23 +2,28 @@ import { useCallback } from "react";
 import createStore from "zustand";
 import socket from "./socket";
 import { DeviceUpdate } from "~/types/IServerToClientEvents";
+import { EmeterRealtime } from "~/types/EmeterRealtime";
 
-export type DevicesState = {
-    devices: { [key: string]: DeviceUpdate };
-    updateDevice: (device: DeviceUpdate) => void;
+export type DeviceEmeterHistoryEntry = {
+    timestamp: Date;
+    power: number;
 };
 
-export const useDeviceStore = createStore<DevicesState>((set) => ({
-    devices: {},
-    updateDevice: (device: DeviceUpdate) =>
-        set((s) => ({
-            ...s,
-            devices: { ...s.devices, [device.id]: device },
-        })),
-}));
+export type DeviceState = {
+    id: string;
+    name: string;
+    emeter: EmeterRealtime & {
+        history: DeviceEmeterHistoryEntry[];
+    };
+};
 
-export const useUpdateDevice = () =>
-    useDeviceStore((state) => state.updateDevice);
+export type DevicesState = {
+    devices: { [key: string]: DeviceState };
+};
+
+export const useDeviceStore = createStore<DevicesState>(() => ({
+    devices: {},
+}));
 
 export const useDeviceData = (id: string) =>
     useDeviceStore(useCallback((state) => state.devices[id], [id]));
@@ -36,7 +41,25 @@ const updateMultipleDevices = (update: DeviceUpdate[]) => {
         ...state,
         devices: {
             ...state.devices,
-            ...update.reduce((p, c) => ({ ...p, [c.id]: c }), {}),
+            ...update.reduce(
+                (p, c): { [id: string]: DeviceState } => ({
+                    ...p,
+                    [c.id]: {
+                        ...c,
+                        emeter: {
+                            ...c.emeter,
+                            history: [
+                                ...(state.devices[c.id]?.emeter?.history ?? []),
+                                {
+                                    timestamp: new Date(c.emeter.timestamp),
+                                    power: c.emeter.power,
+                                },
+                            ],
+                        },
+                    },
+                }),
+                {}
+            ),
         },
     }));
 };
@@ -46,7 +69,19 @@ const updateDevice = (update: DeviceUpdate) => {
         ...state,
         devices: {
             ...state.devices,
-            [update.id]: update,
+            [update.id]: {
+                ...update,
+                emeter: {
+                    ...update.emeter,
+                    history: [
+                        ...state.devices[update.id].emeter.history,
+                        {
+                            timestamp: new Date(update.emeter.timestamp),
+                            power: update.emeter.power,
+                        },
+                    ],
+                },
+            },
         },
     }));
 };

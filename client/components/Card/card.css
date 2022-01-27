@@ -66,7 +66,6 @@ li {
     height: auto;
     max-width: 700px;
     overflow: hidden;
-    /* pointer-events: none; */
 }
 
 .card-open-link {
@@ -90,18 +89,10 @@ li {
     position: absolute;
     top: 0;
     right: 0;
-    overflow: hidden;
     height: 250px;
-    /* width: 100vw; */
-
     width: 700px;
     display: flex;
     justify-content: right;
-}
-
-.card-graph-container .card-graph {
-    height: 250px;
-    width: 700px;
 }
 
 .open .card-graph-container,
@@ -111,23 +102,19 @@ li {
 
 .title-container {
     position: absolute;
-    top: 15px;
-    left: 15px;
+    top: 30px;
+    left: 36px;
     max-width: 300px;
 }
 
-.open .title-container {
-    top: 30px;
-    left: 30px;
-}
-
-h2 {
+.title-container h2 {
     color: #fff;
-    margin: 8px 0;
+    margin: 0;
+    margin-bottom: 12px;
     font-size: 34px;
 }
 
-.category {
+.realtime-power {
     color: #fff;
     font-size: 28px;
     text-transform: uppercase;
@@ -153,7 +140,6 @@ h2 {
     bottom: 0;
     width: 100vw;
     left: 50%;
-
     transform: translateX(-50%);
 }
 
@@ -161,12 +147,6 @@ h2 {
     padding: 300px 35px 35px 35px;
     max-width: 700px;
     width: 90vw;
-}
-
-p {
-    color: #9d9ca1;
-    font-size: 20px;
-    line-height: 28px;
 }
 
 @media only screen and (max-width: 800px) {
@@ -184,6 +164,7 @@ p {
 
 @media only screen and (max-width: 600px) {
     .card {
+        height: 270px;
         flex: 1 0 100%;
         max-width: 100%;
         padding: 10px;
@@ -195,6 +176,10 @@ p {
     .card:nth-child(4n + 4) {
         flex: 1 0 100%;
         max-width: 100%;
+    }
+
+    .card-open-link {
+        margin: 10px 0;
     }
 
     .card-content-container.open {
@@ -213,7 +198,7 @@ p {
 .card-detail {
     flex: 0 0 50%;
     color: #9d9ca1;
-    margin-bottom: 16px;
+    margin-bottom: 40px;
 }
 
 .card-detail h3 {

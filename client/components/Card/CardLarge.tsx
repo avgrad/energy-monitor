@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import FakeGraph from "./FakeGraph";
 import { useDeviceData } from "../../data/Store";
+import RealtimePowerGraph from "../Graph/RealtimePowerGraph";
 
 export default function CardLarge({ id }: { id: string }): JSX.Element {
     const {
@@ -19,13 +19,15 @@ export default function CardLarge({ id }: { id: string }): JSX.Element {
                     <motion.div
                         className="card-graph-container"
                         layoutId={`card-graph-container-${id}`}>
-                        <FakeGraph />
+                        <RealtimePowerGraph id={id} />
                     </motion.div>
                     <motion.div
                         className="title-container"
                         layoutId={`title-container-${id}`}>
                         <h2>{name}</h2>
-                        <span className="category">{power.toFixed(1)} W</span>
+                        <span className="realtime-power">
+                            {power.toFixed(1)} W
+                        </span>
                     </motion.div>
                     <motion.div className="content-container" animate>
                         <PlaceholderContent />
@@ -60,7 +62,7 @@ function PlaceholderContent() {
                     "Usage this Month",
                     "Monthly Average",
                 ].map((title, i) => (
-                    <li className="card-detail">
+                    <li className="card-detail" key={title}>
                         <h3>{title}:</h3>
                         <hr />
                         <span className="consumption">
@@ -71,20 +73,6 @@ function PlaceholderContent() {
                     </li>
                 ))}
             </ul>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Pellentesque nec sollicitudin ante, sed pulvinar felis.
-                Suspendisse fringilla felis in ultricies dapibus. Aenean
-                elementum rhoncus consectetur. Interdum et malesuada fames ac
-                ante ipsum primis in faucibus.
-            </p>
-            <p>
-                Morbi volutpat mi a lorem aliquam, nec sagittis massa suscipit.
-                Vivamus quam nisl, tempor vel scelerisque vitae, lobortis sed
-                ante. Nunc nec est dictum, vestibulum purus et, pharetra nisi.
-                Integer vel enim tellus. Praesent nec urna non lectus aliquam
-                consequat at eget eros.
-            </p>
         </>
     );
 }

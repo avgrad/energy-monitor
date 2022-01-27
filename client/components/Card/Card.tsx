@@ -1,7 +1,7 @@
 import { Link, useMatch } from "react-router-dom";
 import { motion } from "framer-motion";
-import FakeGraph from "./FakeGraph";
 import { useDeviceData } from "../../data/Store";
+import RealtimePowerGraph from "../Graph/RealtimePowerGraph";
 
 export default function Card({ id }: { id: string }): JSX.Element {
     const {
@@ -24,13 +24,15 @@ export default function Card({ id }: { id: string }): JSX.Element {
                     <motion.div
                         className="card-graph-container"
                         layoutId={`card-graph-container-${id}`}>
-                        <FakeGraph />
+                        <RealtimePowerGraph id={id} />
                     </motion.div>
                     <motion.div
                         className="title-container"
                         layoutId={`title-container-${id}`}>
                         <h2>{name}</h2>
-                        <span className="category">{power.toFixed(1)} W</span>
+                        <span className="realtime-power">
+                            {power.toFixed(1)} W
+                        </span>
                     </motion.div>
                     {/*<!--
                         here is the content in the open card

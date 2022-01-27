@@ -1,0 +1,36 @@
+.graph-container {
+    position: relative;
+    display: flex;
+    justify-content: right;
+    padding-top: 50px;
+}
+
+.chart-tooltip {
+    border-left: 3px dotted whitesmoke;
+    font-family: "Consolas", monospace;
+    color: whitesmoke;
+    opacity: 1;
+    pointer-events: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translate(-50%, 0);
+    transition: all 0.1s ease;
+    box-sizing: border-box;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.chart-tooltip .time {
+    position: absolute;
+    bottom: -22px;
+    transform: translate(-50%, 0);
+}
+
+.chart-tooltip .power {
+    position: absolute;
+    top: -22px;
+    transform: translate(-50%, 0);
+}

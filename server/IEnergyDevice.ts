@@ -5,6 +5,7 @@ export default interface IEnergyDevice {
     getInfo(): IEnergyDeviceInfo;
 
     getEmeterRealtime(): EmeterRealtime;
+    getEmeterHistory(): EmeterRealtime[];
     onEmeterUpdate: EventHandlerAttach<EmeterRealtime>;
 }
 

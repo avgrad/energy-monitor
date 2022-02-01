@@ -6,7 +6,9 @@ import RealtimePowerGraph from "../Graph/RealtimePowerGraph";
 export default function Card({ id }: { id: string }): JSX.Element {
     const {
         name,
-        emeter: { power },
+        emeter: {
+            latest: { power },
+        },
     } = useDeviceData(id);
 
     // HACK rerender also triggers a reset of the framer-motion animation, and the open card will become visible in the background.

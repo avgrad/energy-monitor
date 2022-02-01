@@ -6,7 +6,9 @@ import RealtimePowerGraph from "../Graph/RealtimePowerGraph";
 export default function CardLarge({ id }: { id: string }): JSX.Element {
     const {
         name,
-        emeter: { power },
+        emeter: {
+            latest: { power },
+        },
     } = useDeviceData(id);
 
     return (

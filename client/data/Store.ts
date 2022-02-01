@@ -1,20 +1,12 @@
 import { useCallback } from "react";
 import createStore from "zustand";
 import socket from "./socket";
-import { DeviceUpdate } from "~/types/IServerToClientEvents";
-import { EmeterRealtime } from "~/types/EmeterRealtime";
+import { DeviceState, DeviceUpdate } from "~/types/IServerToClientEvents";
+import { EmeterRealtime } from "../../types/EmeterRealtime";
 
 export type DeviceEmeterHistoryEntry = {
     timestamp: Date;
     power: number;
-};
-
-export type DeviceState = {
-    id: string;
-    name: string;
-    emeter: EmeterRealtime & {
-        history: DeviceEmeterHistoryEntry[];
-    };
 };
 
 export type DevicesState = {
@@ -31,12 +23,22 @@ export const useDeviceData = (id: string) =>
 const selectDeviceIds = (state: DevicesState) => Object.keys(state.devices);
 export const useDeviceIds = () => useDeviceStore(selectDeviceIds);
 
-export const useDeviceName = (id: string) =>
-    useDeviceStore(useCallback((state) => state.devices[id].name, [id]));
+// helper functions
+
+function convertTimestamp(input: EmeterRealtime): EmeterRealtime {
+    return {
+        ...input,
+        timestamp: new Date(input.timestamp),
+    };
+}
+
+function sortByTimestamp(a: EmeterRealtime, b: EmeterRealtime): number {
+    return a.timestamp.getTime() - b.timestamp.getTime();
+}
 
 // socket connection and data ingestion
 
-const updateMultipleDevices = (update: DeviceUpdate[]) => {
+const updateMultipleDevices = (update: DeviceState[]) => {
     useDeviceStore.setState((state) => ({
         ...state,
         devices: {
@@ -47,13 +49,16 @@ const updateMultipleDevices = (update: DeviceUpdate[]) => {
                     [c.id]: {
                         ...c,
                         emeter: {
-                            ...c.emeter,
+                            latest: c.emeter.latest,
                             history: [
-                                ...(state.devices[c.id]?.emeter?.history ?? []),
-                                {
-                                    timestamp: new Date(c.emeter.timestamp),
-                                    power: c.emeter.power,
-                                },
+                                ...c.emeter.history
+                                    .concat(
+                                        state.devices[c.id]?.emeter?.history ??
+                                            []
+                                    )
+                                    .map(convertTimestamp)
+                                    .sort(sortByTimestamp),
+                                convertTimestamp(c.emeter.latest), // add latest to history
                             ],
                         },
                     },
@@ -72,13 +77,10 @@ const updateDevice = (update: DeviceUpdate) => {
             [update.id]: {
                 ...update,
                 emeter: {
-                    ...update.emeter,
+                    latest: update.emeter,
                     history: [
                         ...state.devices[update.id].emeter.history,
-                        {
-                            timestamp: new Date(update.emeter.timestamp),
-                            power: update.emeter.power,
-                        },
+                        convertTimestamp(update.emeter), // add latest to history
                     ],
                 },
             },

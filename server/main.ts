@@ -4,20 +4,23 @@ import path from "path";
 import { Server } from "socket.io";
 import IClientToServerEvents from "~/types/IClientToServerEvents";
 import IServerToClientEvents, {
-    DeviceUpdate,
+    DeviceState,
 } from "~/types/IServerToClientEvents";
 import EnergyManager from "./EnergyManager";
 import IEnergyDevice from "./IEnergyDevice";
 
 const { PORT = 3001 } = process.env;
 
-function createHelloMessage(): DeviceUpdate[] {
+function createHelloMessage(): DeviceState[] {
     const devices: IEnergyDevice[] = energyManager.devices;
 
     return devices.map((d) => ({
         id: d.getInfo().id,
         name: d.getInfo().name,
-        emeter: d.getEmeterRealtime(),
+        emeter: {
+            latest: d.getEmeterRealtime(),
+            history: d.getEmeterHistory(),
+        },
     }));
 }
 

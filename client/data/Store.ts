@@ -2,12 +2,7 @@ import { useCallback } from "react";
 import createStore from "zustand";
 import socket from "./socket";
 import { DeviceState, DeviceUpdate } from "~/types/IServerToClientEvents";
-import { EmeterRealtime } from "../../types/EmeterRealtime";
-
-export type DeviceEmeterHistoryEntry = {
-    timestamp: Date;
-    power: number;
-};
+import { EmeterRealtime } from "~/types/EmeterRealtime";
 
 export type DevicesState = {
     devices: { [key: string]: DeviceState };

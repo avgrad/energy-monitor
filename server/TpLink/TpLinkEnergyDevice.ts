@@ -1,5 +1,5 @@
 import { Plug, RealtimeNormalized } from "tplink-smarthome-api";
-import { EmeterRealtime } from "../../types/EmeterRealtime";
+import { EmeterRealtime } from "~/types/EmeterRealtime";
 import Emitter from "../Emitter";
 import IEnergyDevice from "../IEnergyDevice";
 

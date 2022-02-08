@@ -15,11 +15,8 @@ import ChartStreaming from "chartjs-plugin-streaming";
 import { motion, useMotionValue } from "framer-motion";
 import { useCallback, useMemo, useState } from "react";
 import { Line } from "react-chartjs-2";
-import {
-    DeviceEmeterHistoryEntry,
-    DevicesState,
-    useDeviceStore,
-} from "../../data/Store";
+import { EmeterRealtime } from "~/types/EmeterRealtime";
+import { DevicesState, useDeviceStore } from "../../data/Store";
 import "./graph.css";
 import "./tooltipPositionerMouse";
 import {
@@ -61,16 +58,14 @@ const createChartOptions = (
             intersect: false,
             callbacks: {
                 label: function (tooltipContext) {
-                    const power = (
-                        tooltipContext.raw as DeviceEmeterHistoryEntry
-                    ).power;
+                    const power = (tooltipContext.raw as EmeterRealtime).power;
                     return power.toFixed(1) + "W";
                 },
                 beforeLabel: function (tooltipContext) {
                     const timeDiffMs =
                         new Date().getTime() -
                         (
-                            tooltipContext.raw as DeviceEmeterHistoryEntry
+                            tooltipContext.raw as EmeterRealtime
                         ).timestamp.getTime();
                     return "-" + (timeDiffMs / 1000).toFixed(0) + "s";
                 },
@@ -102,7 +97,7 @@ const createChartOptions = (
 
 export default function RealtimePowerGraph({ id }: { id: string }) {
     const data = useDeviceStore(
-        (s: DevicesState): ChartData<"line", DeviceEmeterHistoryEntry[]> => ({
+        (s: DevicesState): ChartData<"line", EmeterRealtime[]> => ({
             datasets: [
                 {
                     data: s.devices[id].emeter.history,

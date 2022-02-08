@@ -4,7 +4,7 @@ import {
     TooltipModel,
     TooltipPosition,
 } from "chart.js";
-import { DeviceEmeterHistoryEntry } from "../../data/Store";
+import { EmeterRealtime } from "~/types/EmeterRealtime";
 
 // type for custom tooltip position at mouse
 declare module "chart.js" {
@@ -41,7 +41,7 @@ Tooltip.positioners.mouse = function (
 
     // HACK cast type over unknown to get rid of type errors for dataset entries
     const data = chart.data.datasets[datasetIndex]
-        .data as unknown as DeviceEmeterHistoryEntry[];
+        .data as unknown as EmeterRealtime[];
     const nextData = diff <= 0 ? data[index] : data[index + 1];
     const prevData = diff > 0 ? data[index] : data[index - 1];
 

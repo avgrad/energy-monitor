@@ -1,41 +1,14 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useDeviceData } from "../../data/Store";
-import RealtimePowerGraph from "../Graph/RealtimePowerGraph";
+import CardCommon from "./CardCommon";
 
-export default function CardLarge({ id }: { id: string }): JSX.Element {
-    const {
-        name,
-        emeter: {
-            latest: { power },
-        },
-    } = useDeviceData(id);
-
+export default function CardOpen({ id }: { id: string }): JSX.Element {
     return (
         <>
             <ClickAwayBackdrop />
-            <div className="card-content-container open">
-                <motion.div
-                    className="card-content"
-                    layoutId={`card-container-${id}`}>
-                    <motion.div
-                        className="card-graph-container"
-                        layoutId={`card-graph-container-${id}`}>
-                        <RealtimePowerGraph id={id} />
-                    </motion.div>
-                    <motion.div
-                        className="title-container"
-                        layoutId={`title-container-${id}`}>
-                        <h2>{name}</h2>
-                        <span className="realtime-power">
-                            {power.toFixed(1)} W
-                        </span>
-                    </motion.div>
-                    <motion.div className="content-container" animate>
-                        <PlaceholderContent />
-                    </motion.div>
-                </motion.div>
-            </div>
+            <CardCommon id={id} type="open">
+                <PlaceholderContent />
+            </CardCommon>
         </>
     );
 }

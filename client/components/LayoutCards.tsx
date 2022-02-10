@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useMatch } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import CardLarge from "./Card/CardLarge";
+import CardOpen from "./Card/CardOpen";
 import CardList from "./Card/CardList";
 import Header from "./Header";
 import { useDeviceStore } from "../data/Store";
@@ -22,7 +22,7 @@ export default function LayoutCards() {
             <CardList />
             <AnimatePresence>
                 {selectedDeviceExists && selectedId && (
-                    <CardLarge id={selectedId} key="item" />
+                    <CardOpen id={selectedId} key="item" />
                 )}
             </AnimatePresence>
         </>

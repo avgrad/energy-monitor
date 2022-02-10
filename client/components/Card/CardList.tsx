@@ -1,4 +1,4 @@
-import Card from "./Card";
+import CardSmall from "./CardSmall";
 import { useDeviceStore } from "../../data/Store";
 import "./card.css";
 
@@ -9,7 +9,7 @@ export default function CardList(): JSX.Element {
     return (
         <ul className="card-list">
             {deviceIds.map((id) => (
-                <Card key={id} id={id} />
+                <CardSmall key={id} id={id} />
             ))}
         </ul>
     );

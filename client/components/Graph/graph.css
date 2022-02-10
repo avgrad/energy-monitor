@@ -7,7 +7,7 @@
 
 .chart-tooltip {
     border-left: 3px dotted whitesmoke;
-    font-family: "Consolas", monospace;
+    font-family: "Exo 2", sans-serif;
     color: whitesmoke;
     opacity: 1;
     pointer-events: none;
